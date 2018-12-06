@@ -1,0 +1,52 @@
+<form [formGroup]="form">
+  <div class="form-row">
+    <div class="col">
+      <div class="form-group">
+        <input
+          placeholder="Chassis code"
+          type="text"
+          class="form-control"
+          formControlName="chassisCode"
+          id="chassisCode"
+        />
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="form-group">
+        <input
+          placeholder="Location code"
+          type="text"
+          class="form-control"
+          formControlName="locationCode"
+          id="locationCode"
+        />
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="form-group">
+        <input
+          placeholder="Status"
+          type="text"
+          class="form-control"
+          formControlName="status"
+          id="status"
+        />
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="btn-group" role="group">
+        <button
+          class="btn btn-info"
+          (click)="onFilter()"
+          [disabled]="!form.valid"
+        >
+          Filter
+        </button>
+        <button class="btn btn-warning" (click)="onReset()">Reset</button>
+      </div>
+    </div>
+  </div>
+</form>

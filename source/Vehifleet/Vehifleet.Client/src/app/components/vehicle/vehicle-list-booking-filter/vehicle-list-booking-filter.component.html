@@ -1,0 +1,55 @@
+<form [formGroup]="form">
+  <div class="form-row">
+    <div class="col">
+      <div class="form-group">
+        <input
+          placeholder="Manufacturer"
+          type="text"
+          class="form-control"
+          formControlName="manufacturer"
+          id="manufacturer"
+        />
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="form-group">
+        <input
+          placeholder="Location code"
+          type="text"
+          class="form-control"
+          formControlName="locationCode"
+          id="locationCode"
+        />
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="form-group">
+        <input
+          placeholder="Min. booking days"
+          type="text"
+          class="form-control"
+          formControlName="minBookingDays"
+          id="minBookingDays"
+        />
+      </div>
+      <div *ngIf="isInvalid('minBookingDays')" class="invalid-feedback d-block">
+        Min. booking days must be a valid number.
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="btn-group" role="group">
+        <button
+          class="btn btn-info"
+          (click)="onFilter()"
+          [disabled]="!form.valid"
+        >
+          Filter
+        </button>
+        <button class="btn btn-warning" (click)="onReset()">Reset</button>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,79 @@
+<div *ngIf="employee">
+  <div class="row justify-content-center">
+    <div class="col col-lg-4">
+      <div class="card border-primary mb-3">
+        <form>
+          <div class="card-header text-center"><h4>Logged in as:</h4></div>
+
+          <div class="card-body">
+            <fieldset>
+              <div class="row">
+                <div class="col">
+                  <div class="formg-group">
+                    <label>First name:</label>
+                    <div>
+                      <input
+                        type="text"
+                        readonly=""
+                        class="form-control"
+                        value="{{ employee.firstName }}"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="formg-group">
+                    <label>Last name:</label>
+                    <div>
+                      <input
+                        type="text"
+                        readonly=""
+                        class="form-control"
+                        value="{{ employee.lastName }}"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <div class="formg-group">
+                    <label>Username:</label>
+                    <div>
+                      <input
+                        type="text"
+                        readonly=""
+                        class="form-control"
+                        value="{{ employee.userName }}"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="formg-group">
+                    <label>Department:</label>
+                    <div>
+                      <input
+                        type="text"
+                        readonly=""
+                        class="form-control"
+                        value="{{ employee.department }}"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="card-body">
+            <div class="row justify-content-center">
+              <button class="btn btn-danger" (click)="logout()">Logout</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

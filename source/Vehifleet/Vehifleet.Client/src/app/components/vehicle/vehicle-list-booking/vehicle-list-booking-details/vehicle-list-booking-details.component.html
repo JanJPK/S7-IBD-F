@@ -1,0 +1,110 @@
+<div class="card border-primary mb-3" style="max-width: 20rem;">
+  <div class="card-header">
+    <h4>
+      {{ vehicle.manufacturer }} {{ vehicle.model }} ({{
+        vehicle.yearOfManufacture
+      }})
+    </h4>
+  </div>
+
+  <div class="card-body">
+    <form>
+      <fieldset>
+        <div class="formg-group row">
+          <label class="col-6 col-form-label">Status:</label>
+          <div class="col-6">
+            <input
+              type="text"
+              readonly=""
+              class="form-control-plaintext"
+              value="{{ vehicle.status }}"
+            />
+          </div>
+        </div>
+        <div class="formg-group row">
+          <label class="col-6 col-form-label">Available until:</label>
+          <div class="col-6">
+            <input
+              type="text"
+              readonly=""
+              class="form-control-plaintext"
+              value="{{ vehicle.canBeBookedUntil | date: format:timezone }}"
+            />
+          </div>
+        </div>
+        <div class="formg-group row">
+          <label class="col-6 col-form-label">License plate:</label>
+          <div class="col-6">
+            <input
+              type="text"
+              readonly=""
+              class="form-control-plaintext"
+              value="{{ vehicle.licensePlate }}"
+            />
+          </div>
+        </div>
+        <div class="formg-group row">
+          <label class="col-6 col-form-label">Current location:</label>
+          <div class="col-6">
+            <input
+              type="text"
+              readonly=""
+              class="form-control-plaintext"
+              value="{{ vehicle.locationCode }}"
+            />
+          </div>
+        </div>
+        <div class="formg-group row">
+          <label class="col-6 col-form-label">Mileage:</label>
+          <div class="col-6">
+            <input
+              type="text"
+              readonly=""
+              class="form-control-plaintext"
+              value="{{ vehicle.mileage }} km"
+            />
+          </div>
+        </div>
+        <div class="formg-group row">
+          <label class="col-6 col-form-label">Engine:</label>
+          <div class="col-6">
+            <input
+              type="text"
+              readonly=""
+              class="form-control-plaintext"
+              value="{{ vehicle.engine }}"
+            />
+          </div>
+        </div>
+        <div class="formg-group row">
+          <label class="col-6 col-form-label">Horsepower:</label>
+          <div class="col-6">
+            <input
+              type="text"
+              readonly=""
+              class="form-control-plaintext"
+              value="{{ vehicle.horsepower }}"
+            />
+          </div>
+        </div>
+        <div class="formg-group row">
+          <label class="col-6 col-form-label">Seats:</label>
+          <div class="col-6">
+            <input
+              type="text"
+              readonly=""
+              class="form-control-plaintext"
+              value="{{ vehicle.seats }}"
+            />
+          </div>
+        </div>
+        <br />
+        <div class="col-6">
+          <button class="btn btn-primary btn-lg" (click)="newBooking()">
+            Book
+          </button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>

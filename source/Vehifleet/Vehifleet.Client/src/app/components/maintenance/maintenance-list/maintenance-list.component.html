@@ -1,0 +1,31 @@
+<div class="card border-primary">
+  <div class="card-header"><h4>Maintenances</h4></div>
+
+  <div class="card-body">
+    <div class="tableFixed">
+      <table class="table table-hover">
+        <thead class="text-white">
+          <th>Date</th>
+          <th>Completed</th>
+          <th>Cost (PLN)</th>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let maintenance of maintenances"
+            (click)="select(maintenance.id)"
+          >
+            <td>{{ maintenance.startDate | date: format:timezone }}</td>
+            <td>{{ maintenance.completed | boolYesNo }}</td>
+            <td>{{ maintenance.cost }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card-body">
+      <button class="btn btn-primary" (click)="select(0)" [disabled]="isBooked">
+        New maintenance
+      </button>
+    </div>
+  </div>
+</div>

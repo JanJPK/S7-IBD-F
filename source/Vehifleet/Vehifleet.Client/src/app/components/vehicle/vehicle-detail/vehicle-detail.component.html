@@ -1,0 +1,267 @@
+<div *ngIf="vehicle; else: loading">
+  <div class="row justify-content-center">
+    <div class="col col-lg-4">
+      <div class="card border-primary">
+        <div class="card-header">
+          <div *ngIf="newEntity; else: existingEntity">
+            <h4>New vehicle</h4>
+          </div>
+          <ng-template #existingEntity>
+            <h4 (click)="openVehicleModel()">
+              {{ vehicle.manufacturer }} {{ vehicle.model }} ({{
+                vehicle.yearOfManufacture
+              }})
+            </h4>
+          </ng-template>
+        </div>
+
+        <div class="card-body">
+          <form [formGroup]="form">
+            <fieldset>
+              <div class="form-group">
+                <label>Status:</label>
+                <div *ngIf="vehicle.status == 'Booked'; else: notBooked">
+                  <input
+                    type="text"
+                    readonly=""
+                    class="form-control"
+                    placeholder="Booked"
+                  />
+                </div>
+                <ng-template #notBooked>
+                  <select
+                    type="text"
+                    class="form-control"
+                    formControlName="status"
+                    id="status"
+                  >
+                    <option *ngFor="let status of statuses" [ngValue]="status">
+                      {{ status }}
+                    </option>
+                  </select>
+                </ng-template>
+              </div>
+
+              <div class="form-group">
+                <label>Location code:</label>
+                <select
+                  type="text"
+                  class="form-control"
+                  formControlName="locationCode"
+                  id="locationCode"
+                >
+                  <option
+                    *ngFor="let location of locations"
+                    [ngValue]="location"
+                  >
+                    {{ location }}</option
+                  >
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Can be booked until:</label>
+                <input
+                  type="text"
+                  readonly=""
+                  class="form-control"
+                  formControlName="canBeBookedUntil"
+                  id="canBeBookedUntil"
+                />
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+        <div class="card-body">
+          <form [formGroup]="form">
+            <fieldset>
+              <div class="form-group">
+                <label>License plate:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="licensePlate"
+                  id="licensePlate"
+                />
+                <div
+                  *ngIf="isInvalid('licensePlate')"
+                  class="invalid-feedback d-block"
+                >
+                  License plate is required.
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Year of manufacture:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="yearOfManufacture"
+                  id="yearOfManufacture"
+                />
+                <div
+                  *ngIf="isInvalid('yearOfManufacture')"
+                  class="invalid-feedback d-block"
+                >
+                  Must be a valid year.
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Chassis code:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="chassisCode"
+                  id="chassisCode"
+                />
+                <div
+                  *ngIf="isInvalid('chassisCode')"
+                  class="invalid-feedback d-block"
+                >
+                  Chassis code is required.
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Inspection valid until:</label>
+                <input
+                  type="text"
+                  formControlName="inspectionValidUntil"
+                  ngbDatepicker
+                  #sd="ngbDatepicker"
+                  (click)="sd.toggle()"
+                  class="form-control"
+                />
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+        <div class="card-body">
+          Operating cost:
+          <form [formGroup]="form">
+            <fieldset>
+              <div class="form-group">
+                <label>Cost (PLN):</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="cost"
+                  id="cost"
+                />
+                <div *ngIf="isInvalid('cost')" class="invalid-feedback d-block">
+                  Cost must be a valid number.
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Fuel consumed (litres):</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="fuelConsumed"
+                  id="fuelConsumed"
+                />
+                <div
+                  *ngIf="isInvalid('fuelConsumed')"
+                  class="invalid-feedback d-block"
+                >
+                  Fuel consumed must be a valid number.
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Mileage (km):</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="mileage"
+                  id="mileage"
+                />
+                <div
+                  *ngIf="isInvalid('mileage')"
+                  class="invalid-feedback d-block"
+                >
+                  Mileage must be a valid number.
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+        <div class="card-body">
+          <div class="btn-group" role="group">
+            <button
+              class="btn btn-primary mb-3"
+              (click)="onSubmit()"
+              [disabled]="!form.valid || vehicle.status != 'Available'"
+            >
+              Save
+            </button>
+
+            <div *ngIf="vehicle.hasBookings; else: noBookings">
+              <button
+                class="btn btn-danger mb-3"
+                (click)="onDelete()"
+                [disabled]="vehicle.status != 'Available'"
+              >
+                Decomission
+              </button>
+            </div>
+
+            <ng-template #noBookings>
+              <button
+                class="btn btn-danger mb-3"
+                (click)="onDelete()"
+                [disabled]="vehicle.status != 'Available'"
+              >
+                Delete
+              </button>
+            </ng-template>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="col">
+            <a href="/bookings;vehicleId={{vehicle.id}}" class="card-link">
+              Show all bookings of this vehicle</a
+            >
+          </div>
+          <div class="col">
+            <a
+              href="/vehicle-models/{{vehicle.vehicleModelId}}"
+              class="card-link"
+            >
+              Go to vehicle model</a
+            >
+          </div>
+        </div>
+
+        <app-audit-footer [auditable]="vehicle"></app-audit-footer>
+      </div>
+    </div>
+
+    <div class="col col-lg-4">
+      <app-insurance-list
+        [selectedVehicleId]="vehicle.id"
+        [isBooked]="
+          vehicle.status == 'Decomissioned' || vehicle.status == 'Booked'
+        "
+      >
+      </app-insurance-list>
+    </div>
+    <div class="col col-lg-4">
+      <app-maintenance-list
+        [selectedVehicleId]="vehicle.id"
+        [isBooked]="
+          vehicle.status == 'Decomissioned' || vehicle.status == 'Booked'
+        "
+      >
+      </app-maintenance-list>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading> <app-loading></app-loading> </ng-template>
